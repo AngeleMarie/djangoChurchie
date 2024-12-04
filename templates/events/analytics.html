@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Analytics {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Events and Christians Overview</h2>
+    <canvas id="events-chart"></canvas>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Categories for the chart
+        const categories = ['Events', 'Christians'];
+
+        const counts = [{{ event_count }}, {{ christian_count }}];  
+
+    
+        const ctx = document.getElementById('events-chart').getContext('2d');
+
+        // Create the bar chart
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: categories,
+                datasets: [{
+                    label: 'Total Christians and Events',
+                    data: counts,
+                    backgroundColor: ['blue', 'green'],
+                    borderColor: ['blue', 'green'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

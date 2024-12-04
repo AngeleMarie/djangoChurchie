@@ -1,0 +1,44 @@
+{% extends "base_auth.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="card mt-5">
+          
+            <div class="card-body">
+                <div class="card-title text-primary">
+                    <h4>Register For A Free Account</h4>
+                </div>
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    {% include "partials/_messages.html" %}
+                    <div class="form-group ">
+                        <input type="text" name="username" class=" my-2  form-control form-control-sm" placeholder="Pastor Name" id="usernameField" value="{{fieldValues.username}}"/>
+
+<div class="invalid-feedback invalid-feedback" style="display:none">
+</div>
+<p class="text-sm text-success usernameSuccess"></p>
+                        <input type="email" placeholder="Pastor Email" name="email" class="my-2 form-control form-control-sm" id="emailField" value="{{fieldValues.email}}"/>
+                        <input type="text" placeholder="Church Name" name="church" class="my-2 form-control form-control-sm"  value="{{fieldValues.church}}"/>
+
+                        <div class="emailFeedback invalid-feedback" style="display:none">
+                        </div>
+                        <input type="password" placeholder="Password" name="password" class="form-control form-control-sm my-2" id="passwordField" value="{{fieldValues.password}}"/>
+                        <small class="float-right py-2 showPasswordToggle text-primary">SHOW</small>
+                    </div>
+<input type="submit" value="Register" class="btn btn-block btn-primary submit-btn "/>
+
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+
+</div>
+<script src="{% static 'js/register.js' %}"></script>
+
+{% endblock %}

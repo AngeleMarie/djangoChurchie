@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="">Christians</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            My Christians
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="col-md-2">
+      <a href="{% url 'addChristian' %}" class="btn btn-primary">Add Christian</a>
+    </div>
+  </div>
+
+  <div class="container">
+    {% include 'partials/_messages.html' %}
+    
+    {% if christians %}
+      <div class="row mb-3">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control" id="searchField" placeholder="Search">
+          </div>
+        </div>
+      </div>
+
+      <div class="app-table">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Christian Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Marital Status</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for christian in page_obj %}
+              <tr>
+                <td>{{ christian.name }}</td>
+                <td>{{ christian.age }}</td>
+                <td>{{ christian.gender }}</td>
+                <td>{{ christian.status }}</td>
+                <td>{{ christian.role }}</td>
+                <td>
+                  <a href="{% url 'editChristian' christian.id %}" class="btn btn-secondary btn-sm">Edit</a>
+                  <a href="{% url 'deleteChristian' christian.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="6" class="text-center">No Christians found</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="no-results" style="display: none;">No results found</p>
+      <div class="table-output">
+
+
+        <table class="table table-stripped table-hover">
+          <thead>
+            <tr>
+              <th>Amount ({{currency}})</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+  
+          <tbody  class="table-body">
+  
+  
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination-container">
+        <div>
+          Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </div>
+        <ul class="pagination justify-content-end">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1">&laquo; First</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+          {% endif %}
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    {% else %}
+      <p>No Christians to display.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script src="{% static 'js/searchChristians.js' %}"></script>
+
+{% endblock content %}

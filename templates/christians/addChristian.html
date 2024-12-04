@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'christians'%}">Christians</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Add Christian</li>
+    </ol>
+  </nav>
+
+  <div class="card">
+    <div class="card-body">
+      <form action="{% url 'addChristian' %}" method="post">
+        {% include 'partials/_messages.html'%} {% csrf_token %}
+        <div class="form-group">
+          <label for="">Christian  Name</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="name"
+            value="{{values.name}}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Age</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            name="age"
+            value="{{values.age}}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Gender</label>
+          <select class="form-control" name="gender">
+            <option value="Male">Male</option>
+              <option value="Female">Female</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="">Marital Status</label>
+          <select class="form-control" name="status">
+            <option value="">-----</option>
+            <option value="single">Single</option>
+              <option value="married">Married</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Christian Role</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="role"
+          />
+        </div>
+
+        <input
+          type="submit"
+          value="Submit"
+          class="btn btn-primary btn-primary-sm"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
